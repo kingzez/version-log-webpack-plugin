@@ -24,7 +24,7 @@ class VersionLogWebpackPlugin {
                 const { version } = this.options;
                 for (const chunk of chunks) {
                     for (const file of chunk.files) {
-                        compilation.assets[file] = new webpack_sources_1.ConcatSource(compilation.assets[file], '\/** Version Log **\/', '\n', `!function(){console.log('version: ${version ? version : format()}')}()`);
+                        compilation.assets[file] = new webpack_sources_1.ConcatSource(compilation.assets[file], '\n', `!function(){console.log('version: ${version ? version : format()}')}()`);
                     }
                 }
             });
@@ -32,4 +32,4 @@ class VersionLogWebpackPlugin {
     }
 }
 exports.default = VersionLogWebpackPlugin;
-// module.exports = VersionLogWebpackPlugin
+module.exports = VersionLogWebpackPlugin;
