@@ -2,19 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const webpack_sources_1 = require("webpack-sources");
 const format = (date = new Date()) => {
-    const pading = (unit) => {
-        // @ts-ignore
-        let unitDate = date[`get${unit}`]();
-        return ('' + (unit === 'Month' ? unitDate + 1 : unitDate)).padStart(2, '0');
-    };
+    const padding = (d) => ('' + d).padStart(2, '0');
     return [
         date.getFullYear(),
-        pading('Month'),
-        pading('Date'),
-        pading('Hours'),
-        pading('Minutes'),
-        pading('Seconds'),
-    ].reduce((acc, curr) => acc + curr, '');
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
+    ].reduce((acc, curr) => acc + padding(curr), '');
 };
 const PLUGIN_NAME = 'VersionLogWebpackPlugin';
 class VersionLogWebpackPlugin {
