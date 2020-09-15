@@ -4,6 +4,7 @@ export interface VersionLogPluginOptions {
 }
 export default class VersionLogWebpackPlugin {
     private readonly options;
-    constructor(options?: VersionLogPluginOptions);
+    private inserted;
+    constructor(options?: VersionLogPluginOptions, inserted?: boolean);
     apply(compiler: Compiler): void;
 }

@@ -22,9 +22,11 @@ export interface VersionLogPluginOptions {
 
 export default class VersionLogWebpackPlugin {
   private readonly options: VersionLogPluginOptions
+  private inserted: boolean
 
-  constructor(options: VersionLogPluginOptions = {}) {
+  constructor(options: VersionLogPluginOptions = {}, inserted = false) {
     this.options = options
+    this.inserted = inserted
   }
 
   apply(compiler: Compiler) {
@@ -38,13 +40,16 @@ export default class VersionLogWebpackPlugin {
               if (!/\.m?js(\?.*)?$/i.test(file)) {
                 continue
               }
-              compilation.assets[file] = new ConcatSource(
-                compilation.assets[file],
-                '\n',
-                `!function(){console.log('version: ${
-                  version ? version : format()
-                }')}()`
-              )
+              if (!this.inserted) {
+                compilation.assets[file] = new ConcatSource(
+                  compilation.assets[file],
+                  '\n',
+                  `!function(){console.log('version: ${
+                    version ? version : format()
+                  }')}()`
+                )
+                this.inserted = true
+              }
             }
           }
         })

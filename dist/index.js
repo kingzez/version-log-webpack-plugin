@@ -15,8 +15,9 @@ const format = (date = new Date()) => {
 };
 const PLUGIN_NAME = 'VersionLogWebpackPlugin';
 class VersionLogWebpackPlugin {
-    constructor(options = {}) {
+    constructor(options = {}, inserted = false) {
         this.options = options;
+        this.inserted = inserted;
     }
     apply(compiler) {
         compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
@@ -27,7 +28,10 @@ class VersionLogWebpackPlugin {
                         if (!/\.m?js(\?.*)?$/i.test(file)) {
                             continue;
                         }
-                        compilation.assets[file] = new webpack_sources_1.ConcatSource(compilation.assets[file], '\n', `!function(){console.log('version: ${version ? version : format()}')}()`);
+                        if (!this.inserted) {
+                            compilation.assets[file] = new webpack_sources_1.ConcatSource(compilation.assets[file], '\n', `!function(){console.log('version: ${version ? version : format()}')}()`);
+                            this.inserted = true;
+                        }
                     }
                 }
             });
