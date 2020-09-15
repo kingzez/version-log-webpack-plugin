@@ -24,6 +24,9 @@ class VersionLogWebpackPlugin {
                 const { version } = this.options;
                 for (const chunk of chunks) {
                     for (const file of chunk.files) {
+                        if (!/\.m?js(\?.*)?$/i.test(file)) {
+                            continue;
+                        }
                         compilation.assets[file] = new webpack_sources_1.ConcatSource(compilation.assets[file], '\n', `!function(){console.log('version: ${version ? version : format()}')}()`);
                     }
                 }
