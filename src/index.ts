@@ -2,8 +2,11 @@ import { Compiler, compilation } from 'webpack'
 import { ConcatSource } from 'webpack-sources'
 
 const format = (date = new Date()) => {
-  // @ts-ignore
-  const pading = (unit: string) => ('' + date[`get${unit}`]()).padStart(2, '0')
+  const pading = (unit: string) => {
+    // @ts-ignore
+    let unitDate = date[`get${unit}`]()
+    return ('' + (unit === 'Month' ? unitDate + 1 : unitDate)).padStart(2, '0')
+  }
   return [
     date.getFullYear(),
     pading('Month'),

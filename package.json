@@ -1,6 +1,6 @@
 {
   "name": "version-log-webpack-plugin",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Insert version log info to bundle code.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

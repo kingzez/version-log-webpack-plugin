@@ -2,8 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const webpack_sources_1 = require("webpack-sources");
 const format = (date = new Date()) => {
-    // @ts-ignore
-    const pading = (unit) => ('' + date[`get${unit}`]()).padStart(2, '0');
+    const pading = (unit) => {
+        // @ts-ignore
+        let unitDate = date[`get${unit}`]();
+        return ('' + (unit === 'Month' ? unitDate + 1 : unitDate)).padStart(2, '0');
+    };
     return [
         date.getFullYear(),
         pading('Month'),
